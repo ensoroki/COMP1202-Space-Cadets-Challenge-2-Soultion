@@ -9,7 +9,6 @@ import java.util.Scanner;
 public class BareBones {
 
 //  author: You Wu
-//  try and come up with a decent object oriented design. Also beware of the nested while loop!
 
 
     // -------------------------------constructor part------------------------------------
@@ -84,8 +83,8 @@ public class BareBones {
     public void Import(String inputInstruction) {
 
         // import the code into the array and self-increment the code length.
-        this.instructionSet[this.codeLength] = inputInstruction;
-        this.codeLength += 1;
+        instructionSet[codeLength] = inputInstruction;
+        codeLength += 1;
 
         // check the new token, if not in the token list, then add the new token
         String[] temp = inputInstruction.split(" ");
@@ -118,78 +117,63 @@ public class BareBones {
 
     // Executing part
     public void Execute() {
-
         boolean done = false;
-
         while (!done) {
-
             // check the instructions all already done or not
             if (linePointer > codeLength) {
                 done = true;
-
             } else {
                 // decode (split) the instruction.
-                String[] instructionRead = this.instructionSet[this.linePointer].split(" ");
-
+                String[] instructionRead = instructionSet[linePointer].split(" ");
                 // execute the instruction.
                 if (Objects.equals(instructionRead[0], "clear")) {
-                    this.Clear(instructionRead[1]);
+                    Clear(instructionRead[1]);
                     linePointer += 1;
                 } else if (Objects.equals(instructionRead[0], "incr")) {
-                    this.Incr(instructionRead[1]);
+                    Incr(instructionRead[1]);
                     linePointer += 1;
                 } else if (Objects.equals(instructionRead[0], "decr")) {
-                    this.Decr(instructionRead[1]);
+                    Decr(instructionRead[1]);
                     linePointer += 1;
                 } else if (Objects.equals(instructionRead[0], "while")) { // if meets iteration:
-
                     // push the line number into the stack.
                     stackPointer += 1;
-                    this.stackIteration[stackPointer] = linePointer;
+                    stackIteration[stackPointer] = linePointer;
                     linePointer += 1;
-
                 } else if (Objects.equals(instructionRead[0], "end")) {
-
                     // pop out the line number of the stack.
-                    Integer tempAddress = this.stackIteration[stackPointer];
+                    Integer tempAddress = stackIteration[stackPointer];
                     stackPointer -= 1;
-
                     // check meets condition of iteration or not.
                     // if meets, jump back to the iteration.
-                    if (tokenMap.get(this.instructionSet[tempAddress].split(" ")[1]) == 0) {
+                    if (tokenMap.get(instructionSet[tempAddress].split(" ")[1]) == 0) {
                         linePointer += 1;
                     } else {
                         linePointer = tempAddress;
                     }
-
-
                 }
-
             }
-
         }
-
     }
-
     // -------------------------------Output part------------------------------------
-
     // iterating token map through for the loop
     public void OutputResult(){
-
         for (Map.Entry<String, Integer> set : tokenMap.entrySet()) {
             System.out.println(set.getKey() + " = " + set.getValue());
         }
-
     }
 
 
-    public static void main(String[] args) {
 
+
+
+
+
+    public static void main(String[] args) {
         // testcase stored in the .txt file
         BareBones test = new BareBones("test2.txt");
         test.Initiallize();
         test.Execute();
         test.OutputResult();
-
     }
 }
