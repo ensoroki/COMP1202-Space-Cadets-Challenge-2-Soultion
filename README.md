@@ -1,3 +1,5 @@
+刚开始学习Java时的黑历史，受不了了
+
 # COMP1202-Space-Cadets-Challenge-2-Soultion
 My solutions of Challenge 2: Bare Bones.
 
